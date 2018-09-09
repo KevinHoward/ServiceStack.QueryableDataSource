@@ -17,30 +17,75 @@ There are several data providers that implement the IQueryable<T> interface for 
 Data providers that include:
 
 * [Microsoft Entity Framework](https://msdn.microsoft.com/en-us/library/system.data.entity.queryableextensions(v=vs.113).aspx)
-* [Microsoft Azure CosmosDb](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.documents.linq.documentqueryable.asdocumentquery?view=azure-dotnet)
-* [MongoDb](https://mongodb.github.io/mongo-csharp-driver/2.4/apidocs/html/M_MongoDB_Driver_Linq_LinqExtensionMethods_AsQueryable__1.htm)
-* [RavenDb](https://ravendb.net/docs/article-page/4.1/csharp/indexes/querying/query-vs-document-queryhttps://ravendb.net/learn/docs-guide)   
-    * **NOTE:** *DocumentQuery doesn't implement IQueryable, but Query does and it's translated into a DocumentQuery.* 
+* [Microsoft Azure CosmosDB](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.documents.linq.documentqueryable.asdocumentquery?view=azure-dotnet)
+* [MongoDB](https://mongodb.github.io/mongo-csharp-driver/2.4/apidocs/html/M_MongoDB_Driver_Linq_LinqExtensionMethods_AsQueryable__1.htm)
+* [RavenDB](https://ravendb.net/docs/article-page/4.1/csharp/indexes/querying/query-vs-document-queryhttps://ravendb.net/learn/docs-guide)   
+    * **NOTE:** *DocumentQuery doesn't implement IQueryable, but Query does translate into a DocumentQuery.* 
 
 
 # How it works
 
-The secret sauce to making this work is the use of the [System.Linq.Dynamic.Core](https://github.com/StefH/System.Linq.Dynamic.Core) library which dynamic transforms of string based queries to LINQ expressions. This allows the library to construct the query without knowing type details. 
+The secret sauce in making this work is the use of the [System.Linq.Dynamic.Core](https://github.com/StefH/System.Linq.Dynamic.Core) library which dynamic transforms string based queries to LINQ expressions. This allows the library to construct the query without knowing type details. 
 
-# Using ServiceStack.Azure.CosmosDb
+# Using ServiceStack.Azure.CosmosDB
 
 Install from NuGet:
 ```
-Install-Package ServiceStack.Azure.CosmosDb
+Install-Package ServiceStack.Azure.CosmosDB
 ```
 
-Simply add the `AutoQueryFeature` in your `AppHost.Configure()` method:
-
+Simply add the `AutoQueryDataFeature` in your `AppHost.Configure()` method:
 ```
 public override void Configure(Container container)
 {
-    // Add ValidationFeature and AuthFeature plugins first
+    // Get Data Provider Settings from Configuration 
+    var endpointUrl = AppSettings.Get<string>("CosmosDb.EndPointUrl");
+    var authorizationKey = AppSettings.Get<string>("CosmosDb.AuthorizationKey");
+    var databaseId = AppSettings.Get<string>("CosmosDb.DatabaseId");
+    var collectionId = AppSettings.Get<string>("CosmosDb.CollectionId");
 
-    Plugins.Add(new WebhookFeature());
+    // Create a Document Client 
+    var docClient = new DocumentClient(
+        new Uri(endpointUrl),
+        authorizationKey);
+
+    // Register the Document Client into the IOC
+    container.Register<IDocumentClient>(c => docClient);
+
+    var requestOptions = new RequestOptions { ConsistencyLevel = ConsistencyLevel.Session };
+
+    // Add AuthQueryDataFeature plugin with a DataSource 
+    // you will need to add a data source for each TDocument type
+    Plugins.Add(new AutoQueryDataFeatureFeature()
+        .AddDataSource(ctx => ctx.CosmosDBDataSource<TDocument>(docClient, databaseId, collectionId, requestOptions)));
+}
+```
+
+# Using ServiceStack.MongoDB
+
+Install from NuGet:
+```
+Install-Package ServiceStack.MongoDB
+```
+
+Simply add the `AutoQueryDataFeature` in your `AppHost.Configure()` method:
+```
+public override void Configure(Container container)
+{
+    // Get Data Provider Settings from Configuration 
+    var connectionString = AppSettings.Get<string>("MongoDB.ConnectionString");
+    var databaseId = AppSettings.Get<string>("MongoDB.DatabaseId");
+    var collectionId = AppSettings.Get<string>("MongoDB.CollectionId");
+            
+    // Create a Mongo Client 
+    var mongoClient = new MongoClient(
+        new MongoUrl(connectionString));
+
+    // Register the Document Client into the IOC
+    container.Register<IMongoClient>(c => mongoClient);
+
+    // Add AuthQueryDataFeature plugin with a DataSource
+    Plugins.Add(new AutoQueryDataFeatureFeature()
+        .AddDataSource(ctx => ctx.MongoDBDataSource<TDocument>(mongoClient, databaseId, collectionId)));
 }
 ```
