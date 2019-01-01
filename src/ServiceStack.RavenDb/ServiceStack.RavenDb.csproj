@@ -13,6 +13,11 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' != 'Debug' ">

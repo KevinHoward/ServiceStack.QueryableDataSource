@@ -13,6 +13,12 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <PackageLicenseUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>ServiceStack AutoQuery IQueryable MongoDB</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' != 'Debug' ">

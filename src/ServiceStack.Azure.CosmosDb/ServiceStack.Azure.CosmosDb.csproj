@@ -13,6 +13,12 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource</RepositoryUrl>
+    <PackageTags>ServiceStack AutoQuery IQueryable Azure CosmosDb</PackageTags>
+    <PackageLicenseUrl>https://github.com/KevinHoward/ServiceStack.QueryableDataSource/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' != 'Debug' ">
