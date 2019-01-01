@@ -30,7 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.8.18" />
-    <PackageReference Include="ServiceStack" Version="5.2.1" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.9" />
+    <PackageReference Include="ServiceStack" Version="5.4.0" />
   </ItemGroup>
 </Project>

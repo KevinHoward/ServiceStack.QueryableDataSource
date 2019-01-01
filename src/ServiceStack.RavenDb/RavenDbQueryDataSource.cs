@@ -29,6 +29,8 @@ namespace ServiceStack.RavenDb
             this.isMapReduce = isMapReduce;
         }
 
+        public override bool DataSourceSupportsLast { get => true; }
+
         public override IQueryable<T> InitQuery(IDataQuery q)
             => InitQuery<T>(q);
 
