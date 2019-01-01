@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -183,17 +182,16 @@ namespace ServiceStack.QueryableDataSource.MongoDB.Test
             Assert.AreEqual("TestExample9", r.Meta["LastName"]);
         }
 
-        [Ignore("Multiple aggregations are not working.")]
         [Test]
         public void Can_GET_document_from_MongoDB_include_comma_delimited_aggregates_AutoQueryDataSource()
         {
-            var aggregations = new[] { "COUNT as Count", "SUM(Number) as NumberSum, FIRST(Name) as FirstName" };
+            var aggregations = new[] { "COUNT(*) as TotalCount", "SUM(Number) as NumberSum", "FIRST(Name) as FirstName" };
             var includes = string.Join(", ", aggregations);
             var request = new TestQueryRequest() { Include = includes };
 
             var r = client.Get(request);
 
-            Assert.AreEqual("10", r.Meta["Count"]);
+            Assert.AreEqual("10", r.Meta["TotalCount"]);
             Assert.AreEqual("45", r.Meta["NumberSum"]);
             Assert.AreEqual("TestExample0", r.Meta["FirstName"]);
         }
