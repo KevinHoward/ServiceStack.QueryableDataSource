@@ -3,6 +3,12 @@
 
 [![NuGet](https://img.shields.io/nuget/v/ServiceStack.QueryableDataSource.svg?label=ServiceStack.QueryableDataSource)](https://www.nuget.org/packages/ServiceStack.QueryableDataSource) 
 
+[![NuGet](https://img.shields.io/nuget/v/ServiceStack.Azure.CosmosDb.svg?label=ServiceStack.Azure.CosmosDb)](https://www.nuget.org/packages/ServiceStack.Azure.CosmosDb) 
+
+[![NuGet](https://img.shields.io/nuget/v/ServiceStack.MongoDb.svg?label=ServiceStack.MongoDb)](https://www.nuget.org/packages/ServiceStack.MongoDb) 
+
+[![NuGet](https://img.shields.io/nuget/v/ServiceStack.RavenDb.svg?label=ServiceStack.RavenDb)](https://www.nuget.org/packages/ServiceStack.RavenDb) 
+
 # ServiceStack.QueryableDataSource
 An collection of IQueryable based DataSource libraries for the ServiceStack AutoQuery feature
 
